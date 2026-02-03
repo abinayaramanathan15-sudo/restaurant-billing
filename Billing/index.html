@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Restaurant Billing</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="brandTitle" id="shopName">Restaurant</div>
+          <div class="brandSub">Cashier</div>
+        </div>
+      </div>
+
+      <nav class="topbar__nav">
+        <a class="btn btn--ghost" href="admin.html">Admin</a>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panelHeader">
+          <div>
+            <h2 class="h2">Menu</h2>
+            <p class="muted">Click an item to add to the selected table.</p>
+          </div>
+
+          <div class="tableControls">
+            <label class="field">
+              <span class="field__label">Table</span>
+              <select id="tableSelect" class="input"></select>
+            </label>
+
+            <button class="btn" id="newTicketBtn" type="button">New ticket</button>
+          </div>
+        </div>
+
+        <div id="menuGrid" class="menuGrid" aria-live="polite"></div>
+      </section>
+
+      <aside class="panel panel--sticky">
+        <div class="panelHeader">
+          <div>
+            <h2 class="h2">Cart</h2>
+            <p class="muted" id="selectedTicketMeta">No table selected</p>
+          </div>
+          <button class="btn btn--danger" id="clearCartBtn" type="button">Clear</button>
+        </div>
+
+        <div id="cartItems" class="cartItems"></div>
+
+        <div class="totals">
+          <div class="totals__row">
+            <span class="muted">Subtotal</span>
+            <span id="subtotalText">₹0.00</span>
+          </div>
+          <div class="totals__row totals__row--total">
+            <span>Total</span>
+            <span id="totalText">₹0.00</span>
+          </div>
+        </div>
+
+        <div class="cartActions">
+          <button class="btn btn--primary" id="payNowBtn" type="button">Pay now (QR)</button>
+          <button class="btn" id="printBillBtn" type="button">Print bill</button>
+        </div>
+
+        <div class="openTickets">
+          <div class="openTickets__header">
+            <h3 class="h3">Open tickets</h3>
+          </div>
+          <div id="openTicketsList" class="openTickets__list"></div>
+        </div>
+      </aside>
+    </main>
+
+    <div class="toastHost" id="toastHost" aria-live="polite" aria-relevant="additions"></div>
+
+    <dialog class="modal" id="payModal">
+      <form method="dialog" class="modal__card">
+        <div class="modal__header">
+          <div>
+            <div class="modal__title">Pay now</div>
+            <div class="muted" id="payModalMeta"></div>
+          </div>
+          <button class="iconBtn" value="cancel" aria-label="Close" type="submit">✕</button>
+        </div>
+
+        <div class="modal__body">
+          <div class="qrWrap">
+            <canvas id="qrCanvas" width="220" height="220" aria-label="Payment QR code"></canvas>
+            <div class="muted small" id="upiText"></div>
+          </div>
+
+          <div class="notice">
+            <div class="notice__title">After payment</div>
+            <div class="muted">Click “Mark as paid” to close this ticket and record the sale.</div>
+          </div>
+        </div>
+
+        <div class="modal__footer">
+          <button class="btn" value="cancel" type="submit">Cancel</button>
+          <button class="btn btn--primary" id="markPaidBtn" value="default" type="submit">
+            Mark as paid
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Print-only receipt -->
+    <section class="receiptPrint" id="receiptPrint" aria-hidden="true"></section>
+
+    <!-- Default item images (for reference)
+         Idly:       https://images.pexels.com/photos/6287527/pexels-photo-6287527.jpeg?auto=compress&cs=tinysrgb&w=800
+         Puttu:      https://images.pexels.com/photos/16244806/pexels-photo-16244806.jpeg?auto=compress&cs=tinysrgb&w=800
+         Poori:      https://images.pexels.com/photos/6287509/pexels-photo-6287509.jpeg?auto=compress&cs=tinysrgb&w=800
+         Dosa:       https://images.pexels.com/photos/8478051/pexels-photo-8478051.jpeg?auto=compress&cs=tinysrgb&w=800
+         Vada:       https://images.pexels.com/photos/8478069/pexels-photo-8478069.jpeg?auto=compress&cs=tinysrgb&w=800
+         Pazhampori: https://images.pexels.com/photos/2586924/pexels-photo-2586924.jpeg?auto=compress&cs=tinysrgb&w=800
+    -->
+
+    <script src="assets/storage.js"></script>
+    <script src="assets/qr.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
